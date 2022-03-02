@@ -1,0 +1,75 @@
+CASEID veramsr_msre_2dcell "MSRE 2D cell"
+
+STATE 
+  rated_power   1.5132694605 !MW
+  power                100.0 !%
+  pressure            0.3447 !MPa
+  tinlet              908.15 !K
+  rated_flow        42.74865 !Kg/s
+
+MATERIAL
+!  MAT  MAT_ID  MAT_TYPE      MATERIAL_NAME        DENSITY     TEMPERATURE    
+   mat     1       9          "Fuel Salt B"        1.0 g/cc      600.00 K     \
+       3006  1.0316e-06 !Li-6
+       3007  2.0630e-02 !Li-7
+       4009  1.0413e-02 !Be-9
+       8016  4.2927e-05 ! O-16
+       9019  4.9763e-02 ! F-19
+      24000  7.5479e-07 !Cr-nat
+      26000  4.0658e-06 !Fe-nat
+      28000  7.1646e-07 !Ni-nat
+      40000  1.6925e-03 !Zr-nat
+      92234  8.5645e-07 ! U-234
+      92235  8.3963e-05 ! U-235
+      92236  3.5009e-07 ! U-236
+      92238  1.7734e-04 ! U-238
+!  MAT  MAT_ID  MAT_TYPE      MATERIAL_NAME        DENSITY     TEMPERATURE      
+   mat     2       0      "Graphite_Moderator"     1.0 g/cc      600.00 K     \
+       5010  1.6583e-08 ! B-10
+       5011  6.6747e-08 ! B-11
+       6001  9.3757e-02 ! C-graphite
+      16000  1.7560e-07 ! S-nat
+      23000  1.7560e-07 ! V-nat
+
+GEOM
+! PINMESH  ID  MSRE  /  R(:) / PITCH / ZVALS(:) / NDIVR / NDIVA / NDIVZ /  S_R(:) / LENGTH / S_NDIVR / S_NDIVA / NDIVL
+  pinMesh   1  msre  / 5.08  / 5.08  /  10.16   /   5   /  6*8  /   1   /  0.508  / 2.032  /     2   /   2*8   /  2*3   
+
+! PIN  PIN_ID   PIN_MESH_ID /  MAT_ID_LIST
+  pin     1          1      /   2 1 1 1 1
+
+! MODULE ID NY NX NZ
+  module 11  1  1  1
+    1
+
+! MOD_DIM    DX     DY     DZ_1
+  mod_dim   5.08   5.08   10.16
+
+! LATTICE ID NX NY
+  lattice  4  1  1
+    11
+
+! ASSEMBLY ID
+  assembly  4
+    4
+
+! CORE SYMMETRY
+  core    360
+    4
+
+XSEC
+  xslib ORNL mpact8g_70s_v4.0m0_02232015.fmt
+  xsshielder T SUBGROUP
+
+OPTION
+!  BOUND_COND W_BC  N_BC  E_BC  S_BC  T_BC  B_BC
+   bound_cond   1     1     1     1     1     1
+   solver 1 2
+   ray 0.05 CHEBYSHEV-YAMAMOTO 16 3
+   conv_crit 1.0E-6 1.0E-6
+   iter_lim 50 1 1
+   vis_edits F
+   scatt_meth TCP0
+   nodal T SP3
+   axial_tl T ISO LFLAT
+   parallel 1 1 1 1

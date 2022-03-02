@@ -1,0 +1,35 @@
+!MCFR height          120.0
+!MCFR axialMesh       15.0
+!MCFR channelWidth    5.0
+!MCFR xsRegionWidth   1.0
+!MCFR xsRegionSubmesh 1
+!MCFR matRings        160.0 1 260.0 2
+!MCFR symmetry        90
+
+CASEID veramsr_cylindrical "Sample cylindrical core"
+
+MATERIAL
+!  MAT  MAT_ID  MAT_TYPE   ::   MATERIAL_NAME
+   mat     1       2       ::       fuel
+!  MAT  MAT_ID  MAT_TYPE   ::   MATERIAL_NAME
+   mat     2       4       ::     reflector
+
+GEOM
+ file ./veramsr_cylindrical_geom.inp
+
+XSEC
+  xslib USER soft_merge33.xsl
+  xsshielder F SUBGROUP
+
+OPTION
+!  BOUND_COND W_BC  N_BC  E_BC  S_BC  T_BC  B_BC
+   bound_cond   1     1     0     0     0     1
+   solver 1 2
+   ray 0.1 CHEBYSHEV-YAMAMOTO 2 1
+   conv_crit 1.0E-6 1.0E-6
+   iter_lim 50 1 1
+   vis_edits T T T
+   scatt_meth TCP0
+   nodal T SP3
+   axial_tl T ISO LFLAT
+   parallel 32 1 1 1
