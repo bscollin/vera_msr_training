@@ -5,7 +5,7 @@ STATE
   power                100.0 !%
   pressure            0.3447 !MPa
   tinlet              908.15 !K
-  rated_flow        42.74865 !Kg/s
+  rated_flow        0.302645 !Kg/s
 
 !  MAT_TRANS  FROM_MATS    TO_MATS    ISO_ELE_ID     TRANSFER_AMOUNTS  TRANSFER_UNITS  TRANSFER_TIME_UNITS
    mat_trans   0 1 1   /    1 0 0   / 92235 62 54 /  1.0E+19 2.0 5  / atoms %at %at /    day sec sec
